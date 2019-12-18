@@ -15,6 +15,7 @@ type ComponentManager interface {
 	ComponentsOfEntity(entity.Entity) ([]component.Component, error)
 	ComponentWithTypeFromEntity(component.Type, entity.Entity) (component.Component, error)
 	EntitiesWithComponentType(component.Type) ([]entity.Entity, error)
+	EntitiesWithComponentTypes([]component.Type) ([]entity.Entity, error)
 }
 
 type componentMap map[component.Type]component.Component
@@ -105,6 +106,23 @@ func (cm *IComponentManager) EntitiesWithComponentType(cType component.Type) ([]
 	var entities []entity.Entity
 	for entity, cMap := range cm.entitiesWithComponents {
 		if _, exists := cMap[cType]; exists {
+			entities = append(entities, entity)
+		}
+	}
+	return entities, nil
+}
+
+// EntitiesWithComponentTypes returns all entities with a component of type
+func (cm *IComponentManager) EntitiesWithComponentTypes(cTypes []component.Type) ([]entity.Entity, error) {
+	var entities []entity.Entity
+	for entity, cMap := range cm.entitiesWithComponents {
+		hasAll := true
+		for _, cType := range cTypes {
+			if _, exists := cMap[cType]; !exists {
+				hasAll = false
+			}
+		}
+		if hasAll {
 			entities = append(entities, entity)
 		}
 	}
