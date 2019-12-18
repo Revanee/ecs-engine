@@ -1,13 +1,15 @@
 package system
 
-import "trashy-ecs/pkg/manager"
+import (
+	"trashy-ecs/pkg/world"
+)
 
 type System interface{}
 
 type Updater interface {
-	Update(manager.EntityManager, manager.ComponentManager) error
+	Update(world.World) error
 }
 
 type Renderer interface {
-	Render(manager.EntityManager, manager.ComponentManager) error
+	Render(world.World) error
 }

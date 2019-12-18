@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"time"
 	"trashy-ecs/pkg/component"
-	"trashy-ecs/pkg/manager"
+	"trashy-ecs/pkg/world"
 )
 
 const nanoseconsInOneSecond float64 = 1000000000
@@ -16,6 +16,9 @@ type Motion struct {
 	lastTimeStep        int64
 	nanosecondsPerFrame float64
 }
+
+var _ System = (*Motion)(nil)
+var _ Updater = (*Motion)(nil)
 
 func NewMotion() *Motion {
 	posType := reflect.TypeOf(&component.Position{})
@@ -35,26 +38,20 @@ func NewMotion() *Motion {
 	}
 }
 
-func (m *Motion) Update(em manager.EntityManager, cm manager.ComponentManager) error {
+func (m *Motion) Update(w world.World) error {
 	currentTime := time.Now().UnixNano()
 	elapsedNanoseconds := float64(currentTime - m.lastTimeStep)
 	var deltaT float64 = 0.0
 	deltaT = elapsedNanoseconds / nanoseconsInOneSecond
 	m.lastTimeStep = currentTime
 
-	entities, err := cm.EntitiesWithComponentTypes(m.requiredComponents)
+	entities, err := w.EntitiesWithComponentTypes(m.requiredComponents...)
 	if err != nil {
 		panic(err)
 	}
 	for _, e := range entities {
-		posI, err := cm.ComponentWithTypeFromEntity(m.posType, e)
-		if err != nil {
-			panic(err)
-		}
-		velI, err := cm.ComponentWithTypeFromEntity(m.velType, e)
-		if err != nil {
-			panic(err)
-		}
+		posI := e.ComponentOfType(m.posType)
+		velI := e.ComponentOfType(m.velType)
 		pos, ok := posI.(*component.Position)
 		if !ok {
 			panic("Could not get Position pointer")

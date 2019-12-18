@@ -1,16 +1,19 @@
 package system
 
-import "trashy-ecs/pkg/manager"
-
-import "trashy-ecs/pkg/component"
-
-import "reflect"
+import (
+	"reflect"
+	"trashy-ecs/pkg/component"
+	"trashy-ecs/pkg/world"
+)
 
 type Gravity struct {
 	massType      component.Type
 	velType       component.Type
 	requiredTypes []component.Type
 }
+
+var _ System = (*Gravity)(nil)
+var _ Updater = (*Gravity)(nil)
 
 func NewGravity() Gravity {
 	massType := reflect.TypeOf(&component.Mass{})
@@ -23,20 +26,14 @@ func NewGravity() Gravity {
 	}
 }
 
-func (g Gravity) Update(_ manager.EntityManager, cm manager.ComponentManager) error {
-	entites, err := cm.EntitiesWithComponentTypes(g.requiredTypes)
+func (g Gravity) Update(w world.World) error {
+	entites, err := w.EntitiesWithComponentTypes(g.requiredTypes...)
 	if err != nil {
 		panic(err)
 	}
 	for _, e := range entites {
-		massI, err := cm.ComponentWithTypeFromEntity(g.massType, e)
-		if err != nil {
-			panic(err)
-		}
-		velI, err := cm.ComponentWithTypeFromEntity(g.velType, e)
-		if err != nil {
-			panic(err)
-		}
+		massI := e.ComponentOfType(g.massType)
+		velI := e.ComponentOfType(g.velType)
 		mass := massI.(*component.Mass)
 		vel := velI.(*component.Velocity)
 		vel.Y -= mass.Grams * 0.001 * 9.8

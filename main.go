@@ -17,26 +17,27 @@ func main() {
 	rl.SetTargetFPS(60)
 
 	engine := engine.NewEngine()
-	engine.Add(system.PosRend{})
-	engine.Add(system.NewMotion())
-	engine.Add(system.NewGravity())
-	e1 := engine.EntityManager.NewEntity()
-	e2 := engine.EntityManager.NewEntity()
-	engine.ComponentManager.AddComponentToEntity(&component.Position{
+	engine.AddSystem(system.PosRend{})
+	engine.AddSystem(system.NewMotion())
+	engine.AddSystem(system.NewGravity())
+	w := engine.World()
+	e1 := w.NewEntity()
+	e2 := w.NewEntity()
+	e1.AddComponent(&component.Position{
 		X: 0,
 		Y: 0,
-	}, e1)
-	engine.ComponentManager.AddComponentToEntity(&component.Position{
+	})
+	e2.AddComponent(&component.Position{
 		X: 50,
 		Y: 50,
-	}, e2)
-	engine.ComponentManager.AddComponentToEntity(&component.Velocity{
+	})
+	e2.AddComponent(&component.Velocity{
 		X: 10,
 		Y: 1,
-	}, e2)
-	engine.ComponentManager.AddComponentToEntity(&component.Mass{
+	})
+	e2.AddComponent(&component.Mass{
 		Grams: 200,
-	}, e2)
+	})
 
 	for !rl.WindowShouldClose() {
 		engine.Update()
