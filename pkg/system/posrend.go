@@ -11,7 +11,7 @@ import (
 
 type PosRend struct{}
 
-func (pr PosRend) Update(em manager.EntityManager, cm manager.ComponentManager) error {
+func (pr PosRend) Render(em manager.EntityManager, cm manager.ComponentManager) error {
 	var components []*component.Position
 	cType := reflect.TypeOf(&component.Position{})
 	entities, err := cm.EntitiesWithComponentType(cType)
@@ -26,7 +26,6 @@ func (pr PosRend) Update(em manager.EntityManager, cm manager.ComponentManager) 
 		components = append(components, c.(*component.Position))
 	}
 
-	rl.BeginDrawing()
 	rl.ClearBackground(rl.RayWhite)
 
 	for _, c := range components {
@@ -35,8 +34,6 @@ func (pr PosRend) Update(em manager.EntityManager, cm manager.ComponentManager) 
 			Y: float32(c.Y),
 		}, 20, rl.Blue)
 	}
-
-	rl.EndDrawing()
 
 	return nil
 }

@@ -1,10 +1,14 @@
 package engine
 
-import "trashy-ecs/pkg/manager"
+import (
+	"trashy-ecs/pkg/manager"
 
-import "trashy-ecs/pkg/system"
+	rl "github.com/gen2brain/raylib-go/raylib"
 
-import "fmt"
+	"trashy-ecs/pkg/system"
+
+	"fmt"
+)
 
 type Engine interface {
 	manager.EntityManager
@@ -25,6 +29,7 @@ func NewEngine() IEngine {
 }
 
 func (e *IEngine) Update() {
+	rl.BeginDrawing()
 	for _, sys := range e.systems {
 		rend, ok := sys.(system.Renderer)
 		if ok {
@@ -33,6 +38,10 @@ func (e *IEngine) Update() {
 				fmt.Println(err)
 			}
 		}
+	}
+	rl.EndDrawing()
+
+	for _, sys := range e.systems {
 		upd, ok := sys.(system.Updater)
 		if ok {
 			err := upd.Update(e.EntityManager, e.ComponentManager)
