@@ -12,8 +12,8 @@ import (
 type PosRend struct{}
 
 func (pr PosRend) Update(em manager.EntityManager, cm manager.ComponentManager) error {
-	var components []component.Position
-	cType := reflect.TypeOf(component.Position{})
+	var components []*component.Position
+	cType := reflect.TypeOf(&component.Position{})
 	entities, err := cm.EntitiesWithComponentType(cType)
 	if err != nil {
 		return fmt.Errorf("Could not get entities with components of type %v", cType)
@@ -23,7 +23,7 @@ func (pr PosRend) Update(em manager.EntityManager, cm manager.ComponentManager) 
 		if err != nil {
 			panic(err)
 		}
-		components = append(components, c.(component.Position))
+		components = append(components, c.(*component.Position))
 	}
 
 	rl.BeginDrawing()
