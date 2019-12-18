@@ -25,10 +25,20 @@ func NewEngine() IEngine {
 }
 
 func (e *IEngine) Update() {
-	for _, system := range e.systems {
-		err := system.Update(e.EntityManager, e.ComponentManager)
-		if err != nil {
-			fmt.Println(err)
+	for _, sys := range e.systems {
+		rend, ok := sys.(system.Renderer)
+		if ok {
+			err := rend.Render(e.EntityManager, e.ComponentManager)
+			if err != nil {
+				fmt.Println(err)
+			}
+		}
+		upd, ok := sys.(system.Updater)
+		if ok {
+			err := upd.Update(e.EntityManager, e.ComponentManager)
+			if err != nil {
+				fmt.Println(err)
+			}
 		}
 	}
 }
