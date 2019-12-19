@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"reflect"
 	"trashy-ecs/pkg/component"
-	"trashy-ecs/pkg/world"
+	"trashy-ecs/pkg/engine/world"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
 )

@@ -3,7 +3,7 @@ package system
 import (
 	"reflect"
 	"trashy-ecs/pkg/component"
-	"trashy-ecs/pkg/world"
+	"trashy-ecs/pkg/engine/world"
 )
 
 type Gravity struct {

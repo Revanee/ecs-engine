@@ -2,8 +2,8 @@ package world
 
 import (
 	"trashy-ecs/pkg/component"
-	"trashy-ecs/pkg/handle"
-	"trashy-ecs/pkg/manager"
+	"trashy-ecs/pkg/engine/handle"
+	"trashy-ecs/pkg/engine/manager"
 )
 
 type World interface {

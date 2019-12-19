@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"time"
 	"trashy-ecs/pkg/component"
-	"trashy-ecs/pkg/world"
+	"trashy-ecs/pkg/engine/world"
 )
 
 const nanoseconsInOneSecond float64 = 1000000000

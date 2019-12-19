@@ -1,8 +1,8 @@
 package engine
 
 import (
-	"trashy-ecs/pkg/manager"
-	"trashy-ecs/pkg/world"
+	"trashy-ecs/pkg/engine/manager"
+	"trashy-ecs/pkg/engine/world"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
 

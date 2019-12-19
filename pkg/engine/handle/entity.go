@@ -4,7 +4,7 @@ import "trashy-ecs/pkg/component"
 
 import "trashy-ecs/pkg/entity"
 
-import "trashy-ecs/pkg/manager"
+import "trashy-ecs/pkg/engine/manager"
 
 import "reflect"
 

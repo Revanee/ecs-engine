@@ -1,7 +1,7 @@
 package system
 
 import (
-	"trashy-ecs/pkg/world"
+	"trashy-ecs/pkg/engine/world"
 )
 
 type System interface{}
