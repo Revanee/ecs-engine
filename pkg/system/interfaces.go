@@ -1,14 +1,14 @@
 package system
 
 import (
-	"trashy-ecs/pkg/engine/world"
 	"trashy-ecs/pkg/event"
+	"trashy-ecs/pkg/world"
 )
 
 type System interface{}
 
 type Updater interface {
-	Update(world.World) error
+	Update(world.World, event.Bus) error
 }
 
 type Renderer interface {
@@ -16,5 +16,6 @@ type Renderer interface {
 }
 
 type EventHandler interface {
-	Handle(event.Event) error
+	event.Handler
+	Types() []event.Type
 }

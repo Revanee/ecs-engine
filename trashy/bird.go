@@ -3,7 +3,7 @@ package trashy
 import (
 	"trashy-ecs/pkg/component"
 	"trashy-ecs/pkg/engine/handle"
-	"trashy-ecs/pkg/engine/world"
+	"trashy-ecs/pkg/world"
 )
 
 func NewBird(w world.World) handle.Entity {
@@ -19,5 +19,6 @@ func NewBird(w world.World) handle.Entity {
 	bird.AddComponent(&component.Mass{
 		Grams: 200,
 	})
+	bird.AddComponent(&component.Jump{})
 	return bird
 }

@@ -22,6 +22,8 @@ func Play() {
 	engine.AddSystem(system.PosRend{})
 	engine.AddSystem(system.NewMotion())
 	engine.AddSystem(system.NewGravity())
+	engine.AddSystem(system.NewJump())
+	engine.AddSystem(system.NewController())
 
 	// Scene init
 	w := engine.World()

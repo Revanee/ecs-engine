@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"reflect"
 	"trashy-ecs/pkg/component"
-	"trashy-ecs/pkg/engine/world"
+	"trashy-ecs/pkg/world"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
@@ -22,7 +22,7 @@ func (pr PosRend) Render(w world.World) error {
 		return fmt.Errorf("Could not get entities with components of type %v", cType)
 	}
 	for _, entity := range entities {
-		c := entity.ComponentOfType(cType)
+		c, _ := entity.ComponentOfType(cType)
 		components = append(components, c.(*component.Position))
 	}
 

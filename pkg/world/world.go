@@ -4,10 +4,12 @@ import (
 	"trashy-ecs/pkg/component"
 	"trashy-ecs/pkg/engine/handle"
 	"trashy-ecs/pkg/engine/manager"
+	"trashy-ecs/pkg/entity"
 )
 
 type World interface {
 	EntitiesWithComponentTypes(...component.Type) ([]handle.Entity, error)
+	EntityHandle(entity.Entity) handle.Entity
 	NewEntity() handle.Entity
 }
 
@@ -35,6 +37,11 @@ func (w IWorld) EntitiesWithComponentTypes(cTypes ...component.Type) ([]handle.E
 		entityHandles = append(entityHandles, handle.NewEntity(w.componentManager, e))
 	}
 	return entityHandles, nil
+}
+
+func (w IWorld) EntityHandle(e entity.Entity) handle.Entity {
+	eh := handle.NewEntity(w.componentManager, e)
+	return eh
 }
 
 func (w IWorld) NewEntity() handle.Entity {

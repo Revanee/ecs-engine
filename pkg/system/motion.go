@@ -4,7 +4,8 @@ import (
 	"reflect"
 	"time"
 	"trashy-ecs/pkg/component"
-	"trashy-ecs/pkg/engine/world"
+	"trashy-ecs/pkg/event"
+	"trashy-ecs/pkg/world"
 )
 
 const nanoseconsInOneSecond float64 = 1000000000
@@ -38,7 +39,7 @@ func NewMotion() *Motion {
 	}
 }
 
-func (m *Motion) Update(w world.World) error {
+func (m *Motion) Update(w world.World, eb event.Bus) error {
 	currentTime := time.Now().UnixNano()
 	elapsedNanoseconds := float64(currentTime - m.lastTimeStep)
 	var deltaT float64 = 0.0
@@ -50,8 +51,8 @@ func (m *Motion) Update(w world.World) error {
 		panic(err)
 	}
 	for _, e := range entities {
-		posI := e.ComponentOfType(m.posType)
-		velI := e.ComponentOfType(m.velType)
+		posI, _ := e.ComponentOfType(m.posType)
+		velI, _ := e.ComponentOfType(m.velType)
 		pos, ok := posI.(*component.Position)
 		if !ok {
 			panic("Could not get Position pointer")

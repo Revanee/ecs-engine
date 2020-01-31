@@ -12,7 +12,7 @@ type Entity interface {
 	AddComponent(component.Component)
 	RemoveComponent(component.Component)
 	RemoveComponentOfType(component.Type)
-	ComponentOfType(component.Type) component.Component
+	ComponentOfType(component.Type) (component.Component, error)
 	ID() entity.Entity
 }
 
@@ -46,10 +46,7 @@ func (eh IEntity) ID() entity.Entity {
 	return entity.Entity(eh.entity)
 }
 
-func (eh IEntity) ComponentOfType(cType component.Type) component.Component {
+func (eh IEntity) ComponentOfType(cType component.Type) (component.Component, error) {
 	c, err := eh.componentManager.ComponentWithTypeFromEntity(cType, eh.entity)
-	if err != nil {
-		panic(err)
-	}
-	return c
+	return c, err
 }
