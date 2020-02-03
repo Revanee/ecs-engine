@@ -25,7 +25,6 @@ func NewJump() *Jump {
 }
 
 func (j *Jump) Handle(e event.Event, w world.World) error {
-	fmt.Println("Received jump event")
 	je, ok := e.(event.JumpEvent)
 	if !ok {
 		return fmt.Errorf("Received a wrong event type: %v", reflect.TypeOf(e))

@@ -1,6 +1,7 @@
 package engine
 
 import (
+	"reflect"
 	"trashy-ecs/pkg/event"
 	"trashy-ecs/pkg/world"
 	"trashy-ecs/pkg/world/manager"
@@ -64,12 +65,13 @@ func (e *IEngine) Update() {
 
 func (e *IEngine) AddSystem(s system.System) {
 	e.systems = append(e.systems, s)
-	fmt.Println("Registered system")
 	if eh, ok := s.(system.EventHandler); ok {
 		for _, et := range eh.Types() {
 			e.eventBus.Subscribe(et, eh)
 		}
-		fmt.Println("Registered event handler")
+		fmt.Println("Registered event handler:", reflect.Indirect(reflect.ValueOf(eh)).Type().Name())
+	} else {
+		fmt.Println("Registered system:", reflect.Indirect(reflect.ValueOf(s)).Type().Name())
 	}
 }
 

@@ -1,12 +1,12 @@
 package system
 
 import (
-	"fmt"
-	rl "github.com/gen2brain/raylib-go/raylib"
 	"reflect"
 	"trashy-ecs/pkg/component"
 	"trashy-ecs/pkg/event"
 	"trashy-ecs/pkg/world"
+
+	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
 type Controller struct {
@@ -31,7 +31,6 @@ func (c *Controller) Update(w world.World, eb event.Bus) error {
 		return err
 	}
 	for _, e := range entities {
-		fmt.Println("Making enitty jump " + fmt.Sprint(e.ID()))
 		eb.Publish(event.JumpEvent{
 			Entity: e.ID(),
 		}, w)
