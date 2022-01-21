@@ -1,7 +1,6 @@
 package trashy
 
 import (
-	"trashy-ecs/pkg/component"
 	"trashy-ecs/pkg/engine"
 	"trashy-ecs/pkg/system"
 
@@ -27,12 +26,6 @@ func Play() {
 
 	// Scene init
 	w := engine.World()
-	e1 := w.NewEntity()
-	e1.AddComponent(&component.Position{
-		X: 0,
-		Y: 0,
-	})
-
 	NewBird(w)
 
 	// Start game loop
